@@ -1,7 +1,28 @@
 aid: ploy
 name: Ploy
-description: Ploy is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Ploy is an AI-powered marketing platform that turns a company's website into
+  its growth engine. Founded in 2025 by former Webflow CTO Bryant Chou and
+  backed by Y Combinator, Ploy deploys AI agents that build and optimize web
+  pages, write copy, run technical SEO fixes, identify and enrich site visitors,
+  launch ad campaigns, and track attribution across three product surfaces (Web,
+  Grow, and Ads). Users activate pre-built marketing strategies called PloyBooks
+  or author custom strategies that agents execute. Ploy is a SaaS product with a
+  credit-based pricing model; as of this enrichment pass it exposes no public
+  developer API, API reference, SDKs, or developer portal — only a product help
+  center and native integrations (Google, GitHub sync, CRM, and ad platforms).
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://ploy.ai/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/ploy/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,10 +32,48 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
+- Marketing
+- Marketing Automation
+- Artificial Intelligence
+- AI Agents
+- SEO
+- Website Builder
+- Growth
+- Advertising
 apis: []
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 4
+  pass: local-v1
+common:
+- type: VulnerabilityDisclosure
+  url: security/ploy-vulnerability-disclosure.yml
+- type: Security
+  url: security/ploy-vulnerability-disclosure.yml
+- type: WellKnown
+  url: well-known/ploy-well-known.yml
+- type: SecurityTxt
+  url: well-known/ploy-security.txt
+- type: DomainSecurity
+  url: security/ploy-domain-security.yml
+- type: Website
+  url: https://ploy.ai
+- type: Blog
+  url: https://ploy.ai/blog
+- type: Pricing
+  url: https://ploy.ai/pricing
+- type: SignUp
+  url: https://ploy.ai
+- type: Login
+  url: https://ploy.ai/workspaces
+- type: Documentation
+  url: https://docs.ploy.ai
+- type: Support
+  url: https://docs.ploy.ai
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
