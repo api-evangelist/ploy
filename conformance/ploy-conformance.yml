@@ -1,0 +1,94 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/security
+docs:
+- https://docs.ploy.ai/security
+- https://ploy.ai/pricing
+- https://trust.ploy.ai
+standards:
+- id: oauth2
+  conforms: true
+  role: client
+  evidence: >-
+    "Connections use OAuth 2.0 with scoped permissions" for every third-party
+    integration (Google, GitHub, Figma, HubSpot, Notion, Slack, ad platforms);
+    "Ploy never stores passwords for any integration". Ploy is an OAuth CLIENT
+    only — it publishes no authorization server of its own
+    (/.well-known/oauth-authorization-server 404, probed 2026-08-12).
+  source: https://docs.ploy.ai/integrations
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on ploy.ai (probed 2026-08-12)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a bare {"error": "..."} JSON envelope, not
+    application/problem+json (observed live 2026-08-12).
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: https://ploy.ai/.well-known/security.txt returns 200 with a Contact field
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no deprecation or sunset policy published
+- id: bearer-token-auth
+  conforms: true
+  evidence: >-
+    Both credential types (PLOY_API_TOKEN, webhook endpoint keys) are sent as
+    HTTP bearer tokens in the Authorization header.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document found on ploy.ai, docs.ploy.ai or ingest.ploy.ai
+    after probing /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+    /api-docs, /redoc, /docs.json (2026-08-12).
+- id: asyncapi
+  conforms: false
+  evidence: webhook ingest is documented in prose; no AsyncAPI document published
+- id: mcp
+  conforms: false
+  evidence: >-
+    No MCP server found. No mention of MCP or Model Context Protocol anywhere in
+    ploy.ai/llms.txt, docs.ploy.ai/llms.txt or the docs pages; /mcp and
+    /.well-known/mcp.json 404 (probed 2026-08-12). Ploy's agent-facing strategy
+    is the CLI plus its own installable Agent Skills catalog.
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on both
+    ploy.ai and docs.ploy.ai (probed 2026-08-12).
+- id: agent-skills
+  conforms: true
+  evidence: >-
+    Ploy publishes an installable Agent Skills catalog — `ploy skills init`
+    writes .agents/skills/<id>/SKILL.md and .claude/skills/<id>/SKILL.md into a
+    checked-out Ploy site, with ownership tracked in .ploy/skills.json and drift
+    detection via `ploy skills sync --check`.
+  source: https://docs.ploy.ai/cli/local-development
+- id: do-not-track
+  conforms: true
+  evidence: install.sh honors the DO_NOT_TRACK convention (and PLOY_INSTALL_NO_ANALYTICS)
+  source: https://ploy.ai/install.sh
+- id: llms-txt
+  conforms: true
+  evidence: llms.txt served at both https://ploy.ai/llms.txt and https://docs.ploy.ai/llms.txt (HTTP 200)
+compliance:
+- id: soc2-type-ii
+  status: published
+  evidence: >-
+    Listed as an Enterprise plan entitlement on https://ploy.ai/pricing and
+    surfaced through the Vanta-hosted trust center at https://trust.ploy.ai
+    ("runploy.com Trust Center", HTTP 200, probed 2026-08-12). The certification
+    report itself is behind the trust center's access request.
+- id: gdpr
+  status: not-published
+  evidence: privacy policy exists (https://ploy.ai/privacy) but no GDPR/DPA page was found
+data_handling:
+  ai_training: >-
+    "Ploy does not use your content to train AI models"; Enterprise terms
+    restate this as "no training on your data".
+  encryption_at_rest: AES-256
+  encryption_in_transit: HTTPS/TLS for all sites, ACME-provisioned certificates per custom domain
+  build_isolation: builds run sandboxed and cannot access other workspaces or sites
+  deploys: immutable snapshots with instant rollback
+  visitor_privacy: cookieless visitor identification, privacy-first first-party analytics
+  source: https://docs.ploy.ai/security

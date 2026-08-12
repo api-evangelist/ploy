@@ -1,0 +1,52 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/reference
+versioning:
+  scheme: uri-path
+  current: v1
+  surface: https://ploy.ai/api/v1/webhook/{endpointSlug}
+  cli_scheme: semver
+  cli_current: 0.7.0
+  docs: https://docs.ploy.ai/cli/reference
+  note: >-
+    The only versioned HTTP path Ploy publishes is /api/v1 on the webhook ingest
+    endpoint. The CLI is versioned separately with semver and ships a
+    machine-readable releases.json manifest per GitHub release.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    Ploy publishes NO deprecation or sunset policy. Two breaking changes have
+    already shipped in the CLI without a deprecation window — v0.2.0 moved CLI
+    auth endpoints under /api/auth, and v0.3.1 renamed `ploy site init --from` to
+    `--slurp` "(no alias)". The `--include-deprecated` flag on the
+    `ploy design-system list-*` commands marks deprecated site components, which
+    is a customer-content concept, not an API deprecation policy. No Deprecation
+    pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+  note: No published SLA or uptime target was found.
+status_page: https://status.ploy.ai
+status_page_probe:
+  url: https://status.ploy.ai
+  status: 200
+  checked: '2026-08-12'
+  note: >-
+    Live status page branded "Ploy.ai Service status" with 24h/7d/30d/90d uptime
+    windows, an incident history feed, and email subscription. Component data is
+    fetched client-side.
+support:
+  email: support@runploy.com
+  faq: https://docs.ploy.ai/faq
+  note: >-
+    docs.ploy.ai/security lists support@runploy.com as the security contact while
+    /.well-known/security.txt on ploy.ai lists security@ploy.ai; the integrations
+    page lists support@ploy.ai. Both corporate domains (ploy.ai and runploy.com)
+    are in use — the Vanta trust center at trust.ploy.ai is titled
+    "runploy.com Trust Center".
+release_channel:
+  cli_releases: https://github.com/Ploy-AI/ploy-tools/releases
+  manifest: releases.json attached to each release
+  self_update: ploy update (atomic binary replacement; daily best-effort update check)
+deprecated_operations: []

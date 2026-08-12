@@ -1,0 +1,58 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/remote-development
+docs:
+- https://docs.ploy.ai/cli/remote-development
+- https://docs.ploy.ai/cli/authentication
+- https://docs.ploy.ai/webhooks
+limit_count: 2
+rate_limits:
+- name: API token requests
+  scope: per-api-token
+  limit: 60
+  window: 1 minute
+  burst: null
+  status_on_exhaustion: null
+  cli_exit_code: 1
+  headers: []
+  note: >-
+    "Stay below 60 requests per minute for each API token." A rate-limited CLI
+    command exits 1 and includes the retry delay in the message. Ploy does not
+    document the HTTP status or any RateLimit-* / Retry-After response header for
+    this surface, and there is no public REST reference where one could be read —
+    an agent gets the retry delay only as prose in the CLI message.
+  source: https://docs.ploy.ai/cli/remote-development
+- name: Webhook ingest
+  scope: per-endpoint
+  limit: null
+  window: null
+  burst: null
+  status_on_exhaustion: 429
+  headers: []
+  note: >-
+    The webhook ingest endpoint returns 429 Too Many Requests when "the endpoint
+    is being rate limited", but Ploy publishes no number, no window, and no
+    Retry-After header contract. Documented guidance is sender-side: back off and
+    retry on 5xx and 429 with jitter.
+  source: https://docs.ploy.ai/webhooks
+quotas:
+- name: Webhook payload size
+  limit: 1 MB per request
+  status_on_exhaustion: 413
+  source: https://docs.ploy.ai/webhooks
+- name: Credits
+  note: >-
+    Ploy's primary consumption control is credits, not request rate — 800/day
+    (3,000 max) on Free, 4,000/mo on Starter, 24,000/mo on Pro, custom on
+    Enterprise. See plans/ploy-plans-pricing.yml.
+  source: https://ploy.ai/pricing
+- name: Visitor enrichment
+  limit: 50/mo Starter, 1,000/mo Pro, custom Enterprise
+  source: https://ploy.ai/pricing
+response_headers:
+  documented: false
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is documented on any Ploy
+    surface. This is the single biggest runtime-signal gap for an agent driving
+    Ploy: the limit is known (60/min) but there is no header telling a caller how
+    much of it is left.

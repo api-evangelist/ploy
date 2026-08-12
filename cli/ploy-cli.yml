@@ -1,0 +1,145 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/reference
+docs:
+  overview: https://docs.ploy.ai/cli
+  install: https://docs.ploy.ai/cli/install
+  authentication: https://docs.ploy.ai/cli/authentication
+  workspaces_sites: https://docs.ploy.ai/cli/workspaces-sites
+  variables_secrets: https://docs.ploy.ai/cli/variables-secrets
+  documents_ploybooks: https://docs.ploy.ai/cli/documents-ploybooks
+  local_development: https://docs.ploy.ai/cli/local-development
+  remote_development: https://docs.ploy.ai/cli/remote-development
+  reference: https://docs.ploy.ai/cli/reference
+name: ploy
+binary: ploy
+version: 0.7.0
+released: '2026-08-11'
+description: >-
+  Standalone command-line interface for Ploy workspaces, sites, content,
+  publishing, and local development. Ploy positions it explicitly as "a reliable
+  command surface for people, automations, and AI agents" — it is the closest
+  thing Ploy publishes to a general-purpose API client, and it is the primary
+  documented way to drive Ploy programmatically.
+install:
+- method: script
+  command: curl -fsSL https://ploy.ai/install.sh | sh
+  note: installs to $HOME/.local/bin by default; adds it to PATH via the shell profile
+- method: self-update
+  command: ploy update
+  note: downloads the newest released binary and atomically replaces the executable
+runtime:
+  requires_node: false
+  requires_bun: false
+  note: >-
+    The installed binary requires no Bun, Node.js or npm. Local design-system
+    inspection commands additionally require bash and either node or bun on PATH.
+platforms:
+- darwin-arm64
+- darwin-x64
+- linux-arm64
+- linux-x64
+authentication:
+  interactive: ploy login
+  headless: PLOY_API_TOKEN (workspace-scoped API token, prefix sk_ploy_pat_)
+  precedence: PLOY_API_TOKEN takes precedence over stored login credentials
+  note: no --token flag; the token is read on every invocation and never written to disk
+global_options:
+- flag: --json
+  description: Machine-readable output where supported
+- flag: --dry-run
+  description: Preview supported mutations (not every command accepts it)
+- flag: --workspace <id>
+  description: Override the effective workspace for one invocation
+environment_variables:
+- name: PLOY_API_TOKEN
+  description: Workspace-scoped credential for headless authentication
+- name: PLOY_WORKSPACE_ID
+  description: Workspace override, below --workspace and above the API token pin
+- name: PLOY_NO_UPDATE_CHECK
+  description: Set to 1 to disable the best-effort daily update notice
+- name: XDG_CONFIG_HOME
+  description: Change the parent directory used for CLI configuration
+- name: DO_NOT_TRACK
+  description: Honored by install.sh; disables the one anonymous install event
+- name: PLOY_INSTALL_NO_ANALYTICS
+  description: Also disables the installer analytics event
+saved_state:
+  path: ~/.config/ploy/config.json
+  mode: '0600'
+  contents: credentials plus selected workspace and site IDs
+exit_codes:
+- code: 0
+  meaning: Success. Without --wait, asynchronous work was accepted or rejoined.
+- code: 1
+  meaning: Runtime, API, service validation, or terminal-operation failure.
+- code: 2
+  meaning: CLI usage error.
+- code: 3
+  meaning: Authentication required or credentials expired.
+- code: 4
+  meaning: Plan upgrade required after an API 402 response.
+- code: 5
+  meaning: site publish --wait timed out; the publish is still running.
+- code: 6
+  meaning: site publish --wait lost API contact; the publish is still running.
+commands:
+- group: lifecycle
+  commands:
+  - ploy update
+  - ploy help [command]
+  - ploy --version
+- group: authentication
+  commands:
+  - ploy login
+  - ploy logout
+  - ploy whoami
+  - ploy tokens
+  - ploy token revoke <target>
+- group: workspaces-and-sites
+  commands:
+  - ploy workspace list|use|current
+  - ploy workspace create
+  - ploy organization list|create
+  - ploy site list|use|init|status|publish
+  - ploy site publish-status <operation-id>
+  - ploy site code-sync init|sync
+- group: configuration
+  commands:
+  - ploy variable set|get
+  - ploy secret set|get
+  - ploy env set
+- group: content-and-workflows
+  commands:
+  - ploy documents list|get|set
+  - ploy ploybooks list
+  - ploy ploybook get|read|outline|read-section
+  - ploy ploybook create|update|edit|delete
+  - ploy ploybook schedule list|create|update|delete
+- group: database
+  commands:
+  - ploy database list|tables|query
+  - ploy database import
+  note: added in CLI v0.5.0 (2026-08-04)
+- group: local-development
+  commands:
+  - ploy skills init|sync
+  - ploy design-system list-components|list-pages
+  - ploy design-system get-page-components|get-theme-colors
+  - ploy design-system plan-page-build|query
+key_flows:
+- name: Publish a site
+  steps: [ploy workspace use, ploy site use, ploy site status, ploy site publish --wait]
+- name: Local development with a coding agent
+  steps: [ploy site code-sync init, ploy skills init, ploy design-system get-theme-colors, ploy site code-sync sync, ploy site publish --wait]
+- name: Headless CI
+  steps: [export PLOY_API_TOKEN, ploy whoami, ploy --workspace $ID site status --id $SITE --json]
+agent_support:
+  json_output: command-specific
+  dry_run: mutations only
+  tty_required_for: interactive workspace/site selectors
+  rate_limit: 60 requests per minute per API token
+  skills: >-
+    `ploy skills init` installs Ploy's own published agent-skill catalog into a
+    checked-out Ploy site at .agents/skills/<id>/SKILL.md and
+    .claude/skills/<id>/SKILL.md; `ploy skills sync --check` exits 1 on drift.

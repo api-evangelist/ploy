@@ -1,0 +1,65 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/install
+note: >-
+  Ploy ships one first-party developer artifact: the standalone `ploy` CLI
+  binary. It is NOT distributed through any language package registry — the
+  documented install path is `curl -fsSL https://ploy.ai/install.sh | sh`, which
+  downloads from https://ploy.ai/downloads/ploy/latest/ploy-<os>-<arch>. That
+  unpinned "latest" URL 302s to a versioned GitHub release asset under
+  Ploy-AI/ploy-tools, which is where the version and date below were read.
+  npm `ploy` (substack, 1.9.0, 2014), npm `ploy-cli` (no published versions) and
+  PyPI `ploy` (ployground, 2.0.1) are unrelated third-party packages and are NOT
+  Ploy the company — they are recorded here as negative findings so a later pass
+  does not mistake them for first-party SDKs.
+  No first-party client SDK (JavaScript, Python, Go, Ruby, Java, .NET, PHP,
+  Rust) was found in any registry or in the docs; Ploy publishes no REST client
+  library, so no SDKs pointer is emitted.
+packages:
+- language: shell
+  registry: script
+  name: ploy
+  url: https://ploy.ai/install.sh
+  install: curl -fsSL https://ploy.ai/install.sh | sh
+  official: true
+  version: null
+  published: null
+  note: >-
+    Unpinned installer. `install.sh` always fetches
+    https://ploy.ai/downloads/ploy/latest/ploy-$os-$arch — the consumer cannot
+    tell from the URL which version they are getting. A SHA-256 checksum is
+    published alongside each asset (…/ploy-darwin-arm64.sha256, HTTP 200) and
+    verified by the installer. Probed 2026-08-12.
+- language: binary
+  registry: github-releases
+  name: ploy
+  url: https://github.com/Ploy-AI/ploy-tools/releases
+  install: curl -fsSL https://ploy.ai/install.sh | sh
+  official: true
+  version: 0.7.0
+  published: '2026-08-11'
+  platforms:
+  - darwin-arm64
+  - darwin-x64
+  - linux-arm64
+  - linux-x64
+  note: >-
+    Resolved by following https://ploy.ai/downloads/ploy/latest/ploy-darwin-arm64
+    (HTTP 302 -> github.com/Ploy-AI/ploy-tools/releases/download/v0.7.0/…) and
+    reading the GitHub releases API on 2026-08-12. Ploy-AI is Ploy's own GitHub
+    organization (blog: https://www.ploy.ai). The repo also publishes a
+    machine-readable release manifest (releases.json) per release.
+  checksums: sha256 published per asset
+absent_registries:
+- registry: npm
+  checked: '2026-08-12'
+  result: no first-party package (npm/ploy is substack's 2014 `ploy`; npm/ploy-cli has no published versions)
+- registry: pypi
+  checked: '2026-08-12'
+  result: no first-party package (pypi/ploy is ployground's server management tool)
+- registry: rubygems
+  checked: '2026-08-12'
+  result: not published
+- registry: crates.io
+  checked: '2026-08-12'
+  result: not published

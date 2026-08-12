@@ -1,0 +1,39 @@
+generated: '2026-08-12'
+method: generated
+source: https://docs.ploy.ai/cli/reference
+note: >-
+  Ploy publishes no OpenAPI, so these skills are grounded in the two contracts it
+  DOES publish: the Ploy CLI command index (docs.ploy.ai/cli/reference) and the
+  webhook ingest endpoint (docs.ploy.ai/webhooks). Every command and every status
+  code used below appears verbatim in those pages or was observed on a live probe
+  — none is invented.
+provider_published_skills:
+  exists: true
+  mechanism: ploy skills init
+  install_paths:
+  - .agents/skills/<id>/SKILL.md
+  - .claude/skills/<id>/SKILL.md
+  ownership: .ploy/skills.json
+  drift_check: ploy skills sync --check (exits 1 on drift)
+  docs: https://docs.ploy.ai/cli/local-development
+  captured: false
+  note: >-
+    Ploy ships its OWN Agent Skills catalog, but it is only reachable by running
+    `ploy skills init` inside an authenticated, checked-out Ploy site — the
+    catalog has no public URL, so its contents are not captured here. This is a
+    notable finding in itself: Ploy is one of the few providers in the catalog
+    that publishes agent skills as a product feature rather than as a repo file.
+skills:
+- file: ploy-publish-a-site.md
+  name: Publish a Ploy site from the CLI
+  api: Ploy CLI
+  operations: [ploy whoami, ploy workspace use, ploy site use, ploy site status, ploy site publish, ploy site publish-status]
+- file: ploy-webhook-to-ploybook.md
+  name: Send an event to Ploy and trigger a Ploybook
+  api: POST https://ploy.ai/api/v1/webhook/{endpointSlug}
+  operations:
+  - POST /api/v1/webhook/{endpointSlug}
+- file: ploy-code-sync-local-development.md
+  name: Edit a Ploy site locally with a coding agent and sync it back
+  api: Ploy CLI
+  operations: [ploy site code-sync init, ploy skills init, ploy design-system get-theme-colors, ploy site code-sync sync, ploy site publish]

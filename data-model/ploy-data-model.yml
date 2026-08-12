@@ -1,0 +1,170 @@
+generated: '2026-08-12'
+method: derived
+source: docs.ploy.ai CLI command surface + platform docs
+docs:
+- https://docs.ploy.ai/core-concepts
+- https://docs.ploy.ai/cli/reference
+- https://docs.ploy.ai/webhooks
+note: >-
+  Derived from the resources the Ploy CLI actually addresses and the objects the
+  docs name, NOT from an OpenAPI — Ploy publishes no spec, so there are no
+  component schemas, no id prefixes and no field-level types to read. Cardinality
+  below is what the documented commands and scoping rules imply (a token pins one
+  workspace; `ploy site use` selects one site; a webhook endpoint binds at most
+  one Ploybook). Treat field names as absent rather than guessed.
+entities:
+- name: Organization
+  description: Top-level account container; managed with `ploy organization list|create` (CLI v0.6.0+).
+  relationships:
+  - has_many: Workspace
+- name: Workspace
+  description: >-
+    The unit of tenancy, billing (credits/plan), membership and settings. Every
+    API token is pinned to exactly one workspace. Commands are `ploy workspace
+    list|use|current|create`.
+  relationships:
+  - belongs_to: Organization
+  - has_many: Site
+  - has_many: Member
+  - has_many: ApiToken
+  - has_many: WebhookEndpoint
+  - has_many: Ploybook
+  - has_many: Document
+  - has_many: Integration
+  - has_many: Database
+  - has_one: CreditBalance
+- name: Member
+  description: A user in a workspace. Roles observed in the docs are Owner, Admin and Member.
+  relationships:
+  - belongs_to: Workspace
+  - has_many: ApiToken
+- name: ApiToken
+  description: >-
+    Workspace-scoped bearer credential (prefix sk_ploy_pat_), 30/90/365-day
+    expiry, shown once, never refreshed. Managed in Settings → Developer.
+  relationships:
+  - belongs_to: Workspace
+    via: workspace pin
+  - belongs_to: Member
+- name: Site
+  description: >-
+    One marketing website. Each site is backed by its own Astro + Tailwind
+    repository under the github.com/ployspace org, managed by Ploy. Commands are
+    `ploy site list|use|init|status|publish`.
+  relationships:
+  - belongs_to: Workspace
+  - has_many: Page
+  - has_many: Deploy
+  - has_one: DesignSystem
+  - has_one: CodeSyncRepository
+  - has_many: Variable
+  - has_many: Secret
+  - has_many: CustomDomain
+- name: CodeSyncRepository
+  description: GitHub repository for the site, initialized with `ploy site code-sync init` and imported with `ploy site code-sync sync`. Pro plan.
+  relationships:
+  - belongs_to: Site
+- name: Deploy
+  description: >-
+    An immutable published snapshot; previous versions are retained for instant
+    rollback. `ploy site publish` returns an operation id inspected with
+    `ploy site publish-status <operation-id>`; production reaches state `ready`.
+  relationships:
+  - belongs_to: Site
+- name: Page
+  description: A route in a site; inspected locally with `ploy design-system list-pages` / `get-page-components`.
+  relationships:
+  - belongs_to: Site
+  - has_many: Component
+    via: page components
+- name: Component
+  description: A registered, reusable section/component in the site's design system, listed with `ploy design-system list-components` (supports --include-deprecated).
+  relationships:
+  - belongs_to: DesignSystem
+- name: DesignSystem
+  description: The site's registered components and theme tokens; `ploy design-system get-theme-colors`, `query`, `plan-page-build`.
+  relationships:
+  - belongs_to: Site
+  - has_many: Component
+- name: Variable
+  description: Runtime configuration value, scoped preview or production; `ploy variable set|get`, `ploy env set`, atomic dotenv import.
+  relationships:
+  - belongs_to: Site
+- name: Secret
+  description: Encrypted runtime value; `ploy secret set|get`.
+  relationships:
+  - belongs_to: Site
+- name: CustomDomain
+  description: Apex or subdomain connected to a site, with ACME-provisioned TLS; reverse-proxy and fallback-origin routing rules attach here.
+  relationships:
+  - belongs_to: Site
+- name: Document
+  description: Workspace Markdown read and written with `ploy documents list|get|set`.
+  relationships:
+  - belongs_to: Workspace
+- name: Ploybook
+  description: >-
+    A reusable multi-step marketing workflow the Ploy agent executes.
+    `ploy ploybook get|read|outline|read-section|create|update|edit|delete`.
+  relationships:
+  - belongs_to: Workspace
+  - has_many: Schedule
+  - has_many: PloybookRun
+- name: Schedule
+  description: Recurring execution of a Ploybook; `ploy ploybook schedule list|create|update|delete`.
+  relationships:
+  - belongs_to: Ploybook
+- name: PloybookRun
+  description: One execution of a Ploybook; consumes credits. Triggered manually, on a schedule, or by a webhook event.
+  relationships:
+  - belongs_to: Ploybook
+  - belongs_to: WebhookEvent
+    via: trigger
+- name: WebhookEndpoint
+  description: >-
+    Inbound ingest endpoint at /api/v1/webhook/{endpointSlug} with its own bearer
+    key; may bind one Ploybook trigger; can be paused, resumed or deleted.
+  relationships:
+  - belongs_to: Workspace
+  - has_many: WebhookEvent
+  - has_one: Ploybook
+    via: trigger
+- name: WebhookEvent
+  description: A stored inbound event — full JSON payload, timestamp, source endpoint, and the resulting Ploybook run.
+  relationships:
+  - belongs_to: WebhookEndpoint
+- name: Integration
+  description: >-
+    OAuth connection to a third-party service (GitHub, Figma, GA4, Search
+    Console, Semrush, PostHog, ClickHouse, HubSpot, Attio, Salesforce, Gmail,
+    Mailchimp, Google/Meta/LinkedIn/Reddit Ads, Notion, Google Workspace,
+    Airtable, Dropbox, Slack, Zoom, and social accounts).
+  relationships:
+  - belongs_to: Workspace
+- name: Database
+  description: Workspace data store browsed with `ploy database list|tables|query` and loaded with `ploy database import` (CLI v0.5.0+).
+  relationships:
+  - belongs_to: Workspace
+  - has_many: Table
+- name: Table
+  description: A table within a workspace database.
+  relationships:
+  - belongs_to: Database
+- name: Visitor
+  description: An identified visiting company/person from cookieless visitor identification; enrichment is metered per plan.
+  relationships:
+  - belongs_to: Site
+- name: CreditBalance
+  description: >-
+    One unified credit balance per workspace drawn on by image, code and document
+    generation, planning, Ploybook runs, and visitor enrichment.
+  relationships:
+  - belongs_to: Workspace
+id_prefixes:
+- prefix: sk_ploy_pat_
+  entity: ApiToken
+  source: https://docs.ploy.ai/cli/authentication
+unknowns:
+- No public object reference or field-level schema is published; attribute names,
+  id formats for workspaces/sites/operations, and pagination shapes are not
+  documented anywhere public.

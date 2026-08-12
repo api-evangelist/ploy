@@ -1,0 +1,48 @@
+# Ploy Support Docs
+
+> Ploy is an AI-powered web marketing automation platform that helps growth teams build, optimize, and publish high-converting marketing sites. These docs cover the platform, developer tools, setup guides, and troubleshooting.
+
+Ploy includes an in-app AI agent that can build pages, write copy, run research, analyze performance, generate images, operate integrations, and manage deploys through natural conversation. The Ploy CLI provides a standalone terminal interface for workspace, site, content, publishing, and local-development workflows.
+
+## Getting Started
+
+- [Introduction](https://docs.ploy.ai/introduction): What Ploy is, why it exists, and how the platform building blocks fit together.
+- [Quick Start](https://docs.ploy.ai/quick-start): Get your first site live in under five minutes, from workspace creation to publish.
+- [Core Concepts](https://docs.ploy.ai/core-concepts): Key Ploy terms including workspaces, sites, Ploys, Ploybooks, deploys, and the design system.
+
+## Platform
+
+- [Ploy's Agent](https://docs.ploy.ai/korra): What Ploy’s in-app agent can do and how to work with it effectively.
+- [Site Builder](https://docs.ploy.ai/site-builder): How Ploy sites are structured and styled with pages, sections, components, and the design system.
+- [Analytics & Visitors](https://docs.ploy.ai/analytics): Track traffic, identify visitors, and connect GA4 and Google Search Console.
+- [Publishing & Deploys](https://docs.ploy.ai/publishing): Publish a site, manage deploys, roll back, and connect a custom domain.
+
+## Ploy CLI
+
+- [Ploy CLI](https://docs.ploy.ai/cli): Use the standalone CLI interactively, from automations, or through AI agents to manage Ploy workspaces, sites, publishing, content, Ploybooks, Code Sync, skills, and design-system context.
+- [CLI Installation & Updates](https://docs.ploy.ai/cli/install): Install the macOS or Linux binary, manage updates and PATH, and control installer analytics.
+- [CLI Authentication & Tokens](https://docs.ploy.ai/cli/authentication): Sign in through Ploy or use a workspace-scoped API token for CI and other headless environments.
+- [CLI Workspaces, Sites & Publishing](https://docs.ploy.ai/cli/workspaces-sites): Select context, create or import sites, inspect readiness, publish production, and run Code Sync.
+- [CLI Variables & Secrets](https://docs.ploy.ai/cli/variables-secrets): Manage preview and production Variables, encrypted Secrets, and atomic dotenv imports.
+- [CLI Documents & Ploybooks](https://docs.ploy.ai/cli/documents-ploybooks): Read and write workspace Markdown, manage Ploybooks, apply exact edits, and configure schedules.
+- [CLI Agent Skills & Site Inspection](https://docs.ploy.ai/cli/local-development): Equip agents with Ploy skills and inspect components, pages, theme colors, and page-build plans in a checked-out site.
+- [CLI Remote Agents & CI](https://docs.ploy.ai/cli/remote-development): Run the Ploy CLI from remote coding agents and CI with API tokens, explicit IDs, safe secret handling, and non-interactive commands.
+- [CLI Command Reference](https://docs.ploy.ai/cli/reference): Global syntax, options, environment variables, saved state, exit codes, automation support, and command index.
+
+## Integrations & Trust
+
+- [Integrations](https://docs.ploy.ai/integrations): Connect GitHub, Figma, Google Analytics, Search Console, Notion, Slack, HubSpot, and more.
+- [Security & Compliance](https://docs.ploy.ai/security): How Ploy protects your data, sites, and visitors.
+- [Advanced Security Controls](https://docs.ploy.ai/enhanced-security): Advanced options for Ploy accounts and organizations, including passkeys and SSO.
+- [Webhooks](https://docs.ploy.ai/webhooks): Send events from external systems into a workspace and trigger Ploybooks.
+
+## Support
+
+- [Custom Domain Setup](https://docs.ploy.ai/custom-domains): Connect an apex domain or subdomain with automatic or manual DNS setup.
+- [Reverse Proxy & Routing Rules](https://docs.ploy.ai/routing-rules): Route paths to Ploy pages or external origins and serve Ploy alongside an existing site.
+- [FAQ & Troubleshooting](https://docs.ploy.ai/faq): Common Ploy issues and how to resolve them.
+
+## Contact
+
+- General support: support@runploy.com
+- Website: https://ploy.ai

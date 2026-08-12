@@ -1,0 +1,101 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/reference
+docs:
+- https://docs.ploy.ai/cli/reference
+- https://docs.ploy.ai/cli/authentication
+- https://docs.ploy.ai/cli/remote-development
+- https://docs.ploy.ai/webhooks
+note: >-
+  Ploy publishes no OpenAPI and no REST API reference. The cross-cutting
+  semantics below are read from the two programmable surfaces Ploy does
+  document — the Ploy CLI contract and the webhook ingest endpoint — plus one
+  live probe of https://ploy.ai/api/v1/webhook/{slug}.
+authentication:
+  style: HTTP bearer
+  credentials:
+  - PLOY_API_TOKEN (workspace-scoped, prefix sk_ploy_pat_, CLI/API)
+  - per-endpoint webhook key (Authorization: Bearer {apiKey})
+  detail: authentication/ploy-authentication.yml
+idempotency:
+  supported: false
+  key_header: null
+  note: >-
+    Ploy documents NO idempotency key on any surface. The nearest published
+    guidance is defensive rather than contractual: asynchronous CLI commands
+    return an operation or resource ID and the reference says to "use the
+    returned operation or resource ID to inspect progress instead of starting
+    duplicate work" (ploy site publish-status <operation-id>), and inbound
+    webhook events are stored verbatim with no dedupe key — a resent event runs
+    the wired Ploybook again. Deliberately recorded as unsupported; no
+    Idempotency pointer is emitted for this provider.
+pagination:
+  style: cursor
+  surfaces:
+  - surface: ploy design-system list-components / list-pages
+    params: [--limit, --cursor, --path]
+    limit_range: 1..200
+  note: >-
+    Cursor pagination is documented only on the local design-system inspection
+    commands. No pagination contract is published for any HTTP endpoint.
+versioning:
+  api_path: /api/v1 (webhook ingest)
+  cli: semver, published as GitHub releases with a releases.json manifest
+  detail: changelog/ploy-changelog.yml
+  breaking_change_history:
+  - v0.2.0 moved CLI auth endpoints under /api/auth
+  - v0.3.1 renamed `ploy site init --from` to `--slurp` with no alias
+error_envelope:
+  http_json: '{"error": "<message>"}'
+  observed: >-
+    POST https://ploy.ai/api/v1/webhook/apievangelist-probe (no auth header)
+    returned HTTP 404 with body {"error":"Endpoint not found"} on 2026-08-12.
+  cli: >-
+    Human-readable message on stderr plus a typed exit code (0/1/2/3/4/5/6);
+    see cli/ploy-cli.yml and errors/ploy-problem-types.yml.
+  rfc9457: false
+machine_readable_output:
+  flag: --json
+  coverage: command-specific — supported on site init/status/publish, documents, ploybooks (JSON by default); not supported on Code Sync or variables/secrets
+  guidance: >-
+    "Use --json where supported and keep stdout available for machine parsing."
+dry_run:
+  flag: --dry-run
+  coverage: mutations only, and not every command accepts it
+rate_limit_signaling:
+  documented_limit: 60 requests per minute per API token
+  exhaustion:
+    cli: exit code 1 with the retry delay in the message
+    http: 429 Too Many Requests on the webhook ingest endpoint
+  response_headers: not documented
+  detail: rate-limits/ploy-rate-limits.yml
+retry_guidance:
+  inbound_webhooks: >-
+    Ploy does not retry inbound events. Senders should retry on 5xx and 429 with
+    exponential backoff and jitter, and must not retry other 4xx.
+  cli_ci: >-
+    "Retry rate limits and transient API failures. Do not retry authentication
+    failures."
+async_operations:
+  pattern: accept-then-poll
+  detail: >-
+    `ploy site publish` returns an operation ID; `--wait` blocks until production
+    reaches `ready` (exit 5 on timeout, exit 6 on lost API contact — in both
+    cases the publish is still running). Webhook ingest returns 202 Accepted and
+    runs any wired Ploybook asynchronously.
+request_tracing:
+  request_id_header: x-request-id
+  observed: >-
+    Present on live responses from ploy.ai (observed 2026-08-12 on
+    https://ploy.ai/downloads/ploy/latest/ploy-darwin-arm64). Not documented, so
+    treat as observational rather than contractual.
+plan_gating:
+  http_status: 402
+  cli_exit_code: 4
+  note: Commands that require a higher plan surface an API 402 as CLI exit code 4.
+cross_links:
+  authentication: authentication/ploy-authentication.yml
+  errors: errors/ploy-problem-types.yml
+  lifecycle: lifecycle/ploy-lifecycle.yml
+  rate_limits: rate-limits/ploy-rate-limits.yml
+  webhooks: asyncapi/ploy-webhooks.yml

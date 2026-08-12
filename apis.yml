@@ -1,38 +1,46 @@
 aid: ploy
 name: Ploy
 description: >-
-  Ploy is an AI-powered marketing platform that turns a company's website into
-  its growth engine. Founded in 2025 by former Webflow CTO Bryant Chou and
-  backed by Y Combinator, Ploy deploys AI agents that build and optimize web
-  pages, write copy, run technical SEO fixes, identify and enrich site visitors,
-  launch ad campaigns, and track attribution across three product surfaces (Web,
-  Grow, and Ads). Users activate pre-built marketing strategies called PloyBooks
-  or author custom strategies that agents execute. Ploy is a SaaS product with a
-  credit-based pricing model; as of this enrichment pass it exposes no public
-  developer API, API reference, SDKs, or developer portal — only a product help
-  center and native integrations (Google, GitHub sync, CRM, and ad platforms).
+  Ploy is an AI-powered web marketing automation platform that turns a company's
+  marketing website into a growth channel. Founded in 2025 by former Webflow CTO
+  Bryant Chou, backed by Y Combinator and First Round Capital ($27M), Ploy runs
+  AI agents that build and optimize Astro/Tailwind marketing sites, write copy,
+  run technical SEO and answer-engine optimization, identify visiting companies
+  without cookies, launch ad campaigns, and execute reusable multi-step workflows
+  called Ploybooks. Its programmable surface is deliberately CLI-first rather
+  than REST-first: Ploy publishes no OpenAPI and no public API reference, but it
+  does ship a standalone `ploy` CLI binary (workspaces, sites, publishing,
+  variables and secrets, documents, Ploybooks, databases, Code Sync, and
+  design-system inspection) authenticated by workspace-scoped API tokens for
+  headless CI and remote coding agents, an installable Agent Skills catalog
+  (`ploy skills init`), and one public HTTP endpoint — an authenticated inbound
+  webhook ingest at /api/v1/webhook/{endpointSlug} that stores arbitrary JSON and
+  triggers a Ploybook.
 accessModel:
-  pricing: unknown
-  onboarding: unknown
-  trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
-image: https://ploy.ai/favicon.ico
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: true
+  label: Self-serve signup with a free tier
+  confidence: high
+  source:
+  - https://ploy.ai/pricing
+  - https://docs.ploy.ai/quick-start
+  generated: '2026-08-12'
+  method: searched
+image: https://cdn.ploy.ai/d21bf4ad-2458-43ee-9561-54c28ab0e85f/user/095160ed-og-home-alt.jpg
 url: https://raw.githubusercontent.com/api-evangelist/ploy/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+- first-round-capital
+x-tier: profiled
+x-tier-reason: cli-and-webhook-surface-documented
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-12'
 tags:
 - Company
 - Marketing
@@ -43,11 +51,44 @@ tags:
 - Website Builder
 - Growth
 - Advertising
-apis: []
+- Webhooks
+- CLI
+- Agent Skills
+apis:
+- aid: ploy:webhook-ingest
+  name: Ploy Webhook Ingest API
+  description: >-
+    The only public HTTP endpoint Ploy documents. An authenticated inbound ingest
+    endpoint that accepts any well-formed JSON object (up to 1 MB) from an
+    external system — Clay, Stripe, Zapier, or a custom backend — stores it
+    verbatim with its timestamp and source endpoint, and optionally runs a
+    Ploybook with the payload injected as prompt context. Each endpoint has its
+    own bearer key, shown once at creation. POST only; 202 on acceptance;
+    documented 400/401/403/404/413/415/429 failures. Ploy does not retry inbound
+    events and publishes no idempotency key, so senders must retry on 5xx and 429
+    with backoff and dedupe on their own side.
+  humanURL: https://docs.ploy.ai/webhooks
+  baseURL: https://ploy.ai/api/v1
+  tags:
+  - Webhooks
+  - Events
+  - Marketing Automation
+  - AI Agents
+  properties:
+  - type: Documentation
+    url: https://docs.ploy.ai/webhooks
+  - type: Webhooks
+    url: asyncapi/ploy-webhooks.yml
+  - type: Authentication
+    url: authentication/ploy-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ploy-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/ploy-rate-limits.yml
 x-enrichment:
-  date: '2026-07-20'
+  date: '2026-08-12'
   status: enriched
-  artifacts_added: 4
+  artifacts_added: 19
   pass: local-v1
 common:
 - type: VulnerabilityDisclosure
@@ -60,6 +101,42 @@ common:
   url: well-known/ploy-security.txt
 - type: DomainSecurity
   url: security/ploy-domain-security.yml
+- type: TrustCenter
+  url: security/ploy-trust-center.yml
+- type: Compliance
+  url: https://trust.ploy.ai
+- type: Conformance
+  url: conformance/ploy-conformance.yml
+- type: Authentication
+  url: authentication/ploy-authentication.yml
+- type: Conventions
+  url: conventions/ploy-conventions.yml
+- type: ErrorCatalog
+  url: errors/ploy-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ploy-lifecycle.yml
+- type: StatusPage
+  url: https://status.ploy.ai
+- type: ChangeLog
+  url: changelog/ploy-changelog.yml
+- type: Packages
+  url: packages/ploy-packages.yml
+- type: CLI
+  url: cli/ploy-cli.yml
+- type: DataModel
+  url: data-model/ploy-data-model.yml
+- type: Webhooks
+  url: asyncapi/ploy-webhooks.yml
+- type: RateLimits
+  url: rate-limits/ploy-rate-limits.yml
+- type: Plans
+  url: plans/ploy-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/ploy-llms.txt
+- type: LLMsTxt
+  url: llms/ploy-docs-llms.txt
 - type: Website
   url: https://ploy.ai
 - type: Blog
@@ -72,8 +149,20 @@ common:
   url: https://ploy.ai/workspaces
 - type: Documentation
   url: https://docs.ploy.ai
+- type: DeveloperPortal
+  url: https://docs.ploy.ai/cli
+- type: APIReference
+  url: https://docs.ploy.ai/cli/reference
+- type: GettingStarted
+  url: https://docs.ploy.ai/quick-start
 - type: Support
-  url: https://docs.ploy.ai
+  url: https://docs.ploy.ai/faq
+- type: GitHubOrganization
+  url: https://github.com/Ploy-AI
+- type: TermsOfService
+  url: https://ploy.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://ploy.ai/privacy
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

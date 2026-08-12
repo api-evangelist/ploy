@@ -1,0 +1,72 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/webhooks
+spec_type: none
+asyncapi_published: false
+direction: inbound
+note: >-
+  Ploy publishes no AsyncAPI document and no OUTBOUND event delivery — there is
+  no subscriber-side webhook catalog, no signing secret, no delivery retry
+  contract, because Ploy does not send events to you. Its webhook surface runs
+  the other way: an authenticated INBOUND ingest endpoint that accepts arbitrary
+  JSON from an external system (Clay, Stripe, Zapier, a custom backend) and
+  optionally triggers a Ploybook with the payload injected as prompt context.
+  That makes it a real, documented, agent-callable HTTP API — the only one Ploy
+  publishes — and it is recorded here rather than fabricated into an AsyncAPI or
+  OpenAPI document.
+endpoint:
+  method: POST
+  url_template: https://ploy.ai/api/v1/webhook/{endpointSlug}
+  content_type: application/json
+  auth: 'Authorization: Bearer {apiKey} (per-endpoint key, shown once at creation)'
+  max_payload: 1 MB
+  schema: >-
+    Any well-formed JSON object. Ploy defines no schema and stores the payload
+    verbatim — the event shape is entirely the sender's.
+  probe:
+    url: https://ploy.ai/api/v1/webhook/apievangelist-probe
+    method: POST
+    status: 404
+    body: '{"error":"Endpoint not found"}'
+    checked: '2026-08-12'
+    note: GET on the same path returned 405, confirming the documented POST-only contract.
+responses:
+- status: 202
+  meaning: Accepted — event stored; wired Ploybook queued asynchronously.
+- status: 400
+  meaning: Body is not valid JSON.
+- status: 401
+  meaning: Missing or invalid Authorization header.
+- status: 403
+  meaning: Endpoint paused or disabled.
+- status: 404
+  meaning: Endpoint slug does not exist.
+- status: 413
+  meaning: Body exceeds 1 MB.
+- status: 415
+  meaning: Content-Type is not application/json.
+- status: 429
+  meaning: Endpoint is being rate limited.
+delivery_semantics:
+  ploy_retries_inbound: false
+  sender_retry_guidance: retry on 5xx and 429 with exponential backoff and jitter; do not retry other 4xx
+  storage: every accepted event is stored with full payload, timestamp and source endpoint
+  dedupe: none documented — a resent event re-runs the wired Ploybook
+  inspection: Workspace Settings → Webhooks → Events (filter by endpoint, time range, payload substring)
+triggers:
+  target: Ploybook
+  binding: one Ploybook per endpoint, set on the endpoint; pass null to clear and return to store-only mode
+  execution: asynchronous, after the 202; failures are logged on the event detail view
+  payload_use: the full event payload is injected as prompt context for the Ploybook run
+endpoint_management:
+  create: Workspace Settings → Webhooks → New endpoint (or ask Ploy's Agent)
+  pause: senders receive 403; prior events preserved
+  rotate: no in-place rotation — create a new endpoint, update the sender, disable the old one
+  delete: removes the endpoint and its event history
+documented_example:
+  name: Clay enrichment to ABM landing page
+  flow: >-
+    Clay HTTP API action POSTs each enriched account row to the Ploy endpoint;
+    the wired Ploybook clones an ABM template, rewrites it for the prospect,
+    publishes it at /for/{company-slug}, and returns the URL.
+  source: https://docs.ploy.ai/webhooks

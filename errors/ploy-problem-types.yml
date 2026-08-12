@@ -1,0 +1,105 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/webhooks
+docs:
+- https://docs.ploy.ai/webhooks
+- https://docs.ploy.ai/cli/reference
+- https://docs.ploy.ai/cli/authentication
+format: json-error-envelope
+envelope: '{"error": "<message>"}'
+rfc9457: false
+note: >-
+  Ploy publishes no OpenAPI, so these are read from the published response-code
+  tables for the webhook ingest endpoint and the CLI exit-code contract, plus one
+  live unauthenticated probe. Ploy does not use application/problem+json and
+  publishes no error-code registry — the envelope carries a human-readable
+  message only.
+problems:
+- status: 202
+  title: Accepted
+  meaning: Event stored. If a Ploybook trigger is wired, it is queued asynchronously.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  retry: false
+- status: 400
+  title: Bad Request
+  meaning: Body is not valid JSON.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Send a well-formed JSON object.
+  retry: false
+- status: 401
+  title: Unauthorized
+  meaning: Missing or invalid Authorization header.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: >-
+    Send `Authorization: Bearer {apiKey}` with a single space and no quotes
+    around the key. Keys are endpoint-scoped and shown once.
+  retry: false
+- status: 403
+  title: Forbidden
+  meaning: Endpoint is paused or disabled.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Re-enable the endpoint in Workspace Settings → Webhooks.
+  retry: false
+- status: 404
+  title: Not Found
+  meaning: Endpoint slug does not exist or was deleted.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Confirm the ingest URL matches the one on the endpoint detail page.
+  retry: false
+  observed_body: '{"error":"Endpoint not found"}'
+  observed: 'live probe 2026-08-12, POST https://ploy.ai/api/v1/webhook/apievangelist-probe'
+- status: 413
+  title: Payload Too Large
+  meaning: Body exceeds 1 MB.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Send one event per row instead of batching.
+  retry: false
+- status: 415
+  title: Unsupported Media Type
+  meaning: Content-Type is not application/json (form-encoded and multipart are rejected).
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Set Content-Type application/json.
+  retry: false
+- status: 429
+  title: Too Many Requests
+  meaning: Endpoint is being rate limited.
+  surface: POST /api/v1/webhook/{endpointSlug}
+  remediation: Back off and retry with exponential backoff and jitter.
+  retry: true
+- status: 405
+  title: Method Not Allowed
+  meaning: The ingest endpoint accepts POST only.
+  surface: GET /api/v1/webhook/{endpointSlug}
+  observed: 'live probe 2026-08-12 — GET returned 405'
+  retry: false
+- status: 402
+  title: Payment Required
+  meaning: The requested operation needs a higher plan.
+  surface: Ploy API (surfaced by the CLI as exit code 4)
+  remediation: Upgrade the workspace plan.
+  retry: false
+cli_exit_codes:
+- code: 0
+  meaning: Success. Without --wait, asynchronous work was accepted or rejoined.
+- code: 1
+  meaning: Runtime, API, service validation, or terminal-operation failure (includes rate limiting, which reports the retry delay).
+- code: 2
+  meaning: CLI usage error (also returned by logout/tokens/token revoke while PLOY_API_TOKEN is set).
+- code: 3
+  meaning: Authentication required or credentials expired — "PLOY_API_TOKEN is invalid or expired" / "is not workspace-scoped". Do not retry.
+- code: 4
+  meaning: Plan upgrade required after an API 402 response.
+- code: 5
+  meaning: site publish --wait timed out; the publish is still running.
+- code: 6
+  meaning: site publish --wait lost API contact; the publish is still running.
+known_messages:
+- message: This API token is scoped to a different workspace
+  cause: --workspace or PLOY_WORKSPACE_ID names a workspace other than the token's pin
+  exit_code: 1
+- message: PLOY_API_TOKEN is invalid or expired. Create a new token in workspace settings → Developer.
+  exit_code: 3
+- message: PLOY_API_TOKEN is not workspace-scoped.
+  exit_code: 3
+- message: <command> is unavailable when PLOY_API_TOKEN is set. Manage API tokens in workspace settings → Developer.
+  exit_code: 2

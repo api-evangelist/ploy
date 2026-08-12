@@ -1,0 +1,75 @@
+# Ploy
+
+> Ploy is an AI-powered web marketing automation platform for growth teams. It helps teams build, optimize, and publish marketing sites, then use analytics, visitor identification, answer-engine optimization, and workflows to turn site activity into growth.
+
+## What Ploy does
+
+Ploy helps growth teams run their marketing website as an ongoing growth channel: build and ship pages, measure traffic, identify visiting companies, improve visibility in AI answers, and run repeatable marketing workflows.
+
+## Product
+
+- [Pricing](https://ploy.ai/pricing): Free, Starter, Pro, and Enterprise plans.
+- [Ploybooks](https://ploy.ai/ploybooks): Step-by-step marketing workflows Ploy runs end-to-end.
+- [Answer Engine Optimization](https://ploy.ai/features/answer-engine-optimization): Tools for improving AI-search visibility and tracking citations.
+- [AI Website Builder](https://ploy.ai/features/ai-website-builder): Build marketing pages with AI while keeping the site on-brand.
+- [Analytics](https://ploy.ai/features/analytics): Understand site traffic and performance.
+- [Visitor Identification](https://ploy.ai/features/visitor-identification): Identify companies visiting your site.
+- [Account-Based Marketing](https://ploy.ai/features/account-based-marketing): Build account-focused marketing experiences.
+- [Ploy Ads](https://ploy.ai/features/ploy-ads): Plan and manage paid advertising work.
+- [Ploy Grow](https://ploy.ai/features/ploy-grow): Use site activity to guide growth work.
+- [Hosting](https://ploy.ai/features/hosting): Publish and manage marketing sites.
+
+## Who Ploy is for
+
+- [Startups](https://ploy.ai/for/startups)
+- [Agencies](https://ploy.ai/for/agencies)
+- [Enterprise teams](https://ploy.ai/for/enterprise)
+
+## Comparisons and alternatives
+
+- [Ploy alternatives](https://ploy.ai/alternatives): An overview of Ploy alternatives and where each fits.
+- [Ploy vs Flint](https://ploy.ai/vs/flint)
+- [Ploy vs Framer](https://ploy.ai/vs/framer)
+- [Ploy vs Webflow](https://ploy.ai/vs/webflow)
+- [Ploy vs Vercel](https://ploy.ai/vs/vercel)
+- [Ploy vs v0](https://ploy.ai/vs/v0)
+- [Ploy vs Lovable](https://ploy.ai/vs/lovable)
+- [Ploy vs Bolt](https://ploy.ai/vs/bolt)
+- [Ploy vs Claude](https://ploy.ai/vs/claude)
+
+## Public content
+
+- [10 Best All-in-One Website Growth Platforms for 2026](https://ploy.ai/blog/best-all-in-one-website-growth-platforms): Compare 10 all-in-one website growth platforms on builder, automation, CRM, and visitor intelligence, plus which ones keep optimizing after launch.
+- [12 Best Vercel Alternatives in 2026](https://ploy.ai/blog/best-vercel-alternatives): Compare 12 Vercel alternatives for marketing sites based on team size, technical resources, launch speed, costs, and what happens after go-live.
+- [30 Website Optimization Statistics You Should Know in 2026](https://ploy.ai/blog/website-optimization-statistics): 30 website optimization statistics on page speed, conversion rates, and AI search, plus what separates top-performing sites from everyone else in 2026.
+- [6 Best Bolt.new Alternatives for Growth Teams](https://ploy.ai/blog/best-bolt-new-alternatives): Prototyping in Bolt.new is fast. Shipping a marketing site your team can run is not. See how Lovable, Webflow, Framer, v0, Replit, and Ploy compare.
+- [7 Best Framer Alternatives in 2026 (Compared)](https://ploy.ai/blog/best-framer-alternatives): Compare the 7 best Framer alternatives in 2026, from Webflow and Unbounce to Ploy. See which platform keeps improving your site after launch.
+- [7 Best Lovable Alternatives in 2026](https://ploy.ai/blog/best-lovable-alternatives): Lovable turns prompts into apps, but a marketing site needs more. Compare 7 alternatives on design control, SEO, visitor data, and post-launch work.
+- [7 Best v0 Alternatives in 2026 (Ranked)](https://ploy.ai/blog/best-v0-alternatives): Great React components are only part of a website. These 7 v0 alternatives handle hosting, CMS, SEO, integrations, and the maintenance that follows.
+- [AI Web Design with Opus and Sol](https://ploy.ai/blog/ai-web-design-with-opus-and-sol): The best prompt isn't a prompt. It's a picture. That and many other I've picked up building websites with AI: how to spot slop, where the models forget, why the design plan is the whole game.
+- [Best Webflow Alternatives for Marketing Teams in 2026](https://ploy.ai/blog/webflow-alternatives): Compare 6 Webflow alternatives on technical requirements, implementation speed, and what each platform actually does after your site goes live.
+- [Best Wix Alternatives in 2026](https://ploy.ai/blog/best-wix-alternatives): Compare the best Wix alternatives for growth teams based on shipping speed, SEO, visitor intelligence, integrations, and post-launch work.
+- [Best WordPress Alternatives in 2026 (Compared)](https://ploy.ai/blog/best-wordpress-alternatives): Compare the best WordPress alternatives in 2026, including Webflow, Framer, Unbounce, and Ploy. See which one keeps working after your site goes live.
+- [Figma landing page breakdown: How it converts visitors](https://ploy.ai/blog/figma-landing-page-breakdown): Learn how Figma landing pages use clear messaging, strong CTAs, product visuals, trust signals, and simple signup flows to turn visitors into users.
+- [How a design studio ships pixel-perfect client sites with AI](https://ploy.ai/library/how-agencies-build-client-sites-with-ai): Visux builds branded, animation-heavy product sites with an AI website builder — keeping full code ownership and one-to-one Figma fidelity. Here is the workflow.
+- [Linear Landing Page Breakdown: How It Drives Signups](https://ploy.ai/blog/linear-landing-page-breakdown): See how Linear’s landing page uses clear messaging, product visuals, social proof, and a focused signup path to drive more conversions.
+- [Migrating a production AI agent to GPT-5.6](https://ploy.ai/blog/migrating-a-production-ai-agent-to-gpt-5-6): For four months, no frontier model beat Claude Opus in our production evals. GPT-5.6 did. This is what we learned while migrating.
+- [Never Forget to Publish Again: Introducing Auto-Publish](https://ploy.ai/blog/auto-publish): Auto-publish ships your changes the moment Ploy finishes them — no more polished edits sitting in preview because someone forgot to hit publish. Here is how it works and when to turn it on.
+- [Notion Landing Page Breakdown: What Makes It Convert So Well](https://ploy.ai/blog/notion-landing-page-breakdown): See how Notion's landing pages use focused messages, single-goal CTAs, social proof, and continuous optimization to convert.
+- [Ploy raises $27M to turn your company's website into your hardest working employee](https://ploy.ai/blog/ploy-raises-27m): Ploy is generally available today, and we've raised $27M from First Round Capital and Y Combinator. A note from our CEO on why the website matters more than ever — and the AI growth team built to run it.
+- [Privacy Policy](https://ploy.ai/privacy): Ploy's privacy policy.
+- [Stripe Landing Page Breakdown: What Makes It Convert So Well](https://ploy.ai/blog/stripe-landing-page-breakdown): See how Stripe uses focused messaging, clear CTAs, product proof, and technical trust to turn landing-page visitors into users.
+- [Terms of Service](https://ploy.ai/terms-of-service): Ploy's terms of service.
+- [The Joy of Ploy: full setup, use cases, and what is possible](https://ploy.ai/library/the-joy-of-ploy-webinar-recap): A section-by-section recap of our first live webinar — the site slurp, redesign, PloyBooks, ad creatives as code, ABM, and going live. Watch the replay, or jump straight to the timestamps below.
+- [Vercel Landing Page Breakdown: Developer-Focused Design](https://ploy.ai/blog/vercel-landing-page-breakdown): Great developer design is more than a dark theme and grid lines. Vercel shows how product clarity, speed, navigation, and ongoing optimization work together.
+- [What we learned running AI-native SEO and AEO workflows live](https://ploy.ai/library/ai-native-seo-aeo-at-scale-webinar-recap): We spent an hour with Corey Haines turning videos into content, planning programmatic SEO pages, building competitor alternatives, and talking through what still makes AI-generated work worth reading.
+- [Why every website change feels like a project — and how teams fix it](https://ploy.ai/library/why-website-changes-feel-like-projects): Every campaign page, headline test, and microsite turns into a production cycle. Visux explains the shift to a website operating model that moves at the speed of the business.
+- [Your AI-Built Site Is Invisible to ChatGPT](https://ploy.ai/blog/ai-built-sites-invisible-to-chatgpt): Lovable, v0, and Bolt ship client-rendered SPAs that serve a blank page to ChatGPT, Claude, and Perplexity. Here is the technical reason why, how to test your own site in 8 seconds, and why server-side rendering is the fix.
+
+## Company information
+
+- [Website](https://ploy.ai)
+- [FAQ](https://ploy.ai/faq)
+- [Contact](https://ploy.ai/contact)
+- [Privacy Policy](https://ploy.ai/privacy)
+- [Terms of Service](https://ploy.ai/terms-of-service)

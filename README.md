@@ -42,6 +42,23 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ploy is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Ploy is an AI-powered web marketing automation platform — AI agents that build, optimize and publish
+Astro/Tailwind marketing sites, run SEO and answer-engine optimization, identify visiting companies,
+and execute reusable multi-step workflows called Ploybooks.
 
-Backed by: y-combinator
+Ploy's programmable surface is **CLI-first, not REST-first**. As of the 2026-08-12 enrichment pass it
+publishes:
+
+- a standalone **`ploy` CLI** (v0.7.0, released 2026-08-11) covering workspaces, organizations, sites,
+  publishing, variables/secrets, documents, Ploybooks, databases, Code Sync and design-system
+  inspection — authenticated by workspace-scoped `PLOY_API_TOKEN` for headless CI and remote agents;
+- one public HTTP endpoint — an authenticated **inbound webhook ingest** at
+  `POST https://ploy.ai/api/v1/webhook/{endpointSlug}` that stores arbitrary JSON and triggers a
+  Ploybook;
+- an installable **Agent Skills catalog** (`ploy skills init`) written into a checked-out Ploy site;
+- `llms.txt` on both `ploy.ai` and `docs.ploy.ai`, and a served `/.well-known/security.txt`.
+
+It publishes **no OpenAPI, no REST API reference, no client SDKs, no MCP server, no A2A agent card and
+no deprecation policy** — each probed and recorded as an honest absence in this repo.
+
+Backed by: y-combinator, first-round-capital

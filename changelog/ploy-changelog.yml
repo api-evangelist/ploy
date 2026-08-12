@@ -1,0 +1,61 @@
+generated: '2026-08-12'
+method: searched
+source: https://github.com/Ploy-AI/ploy-tools/releases
+machine_readable: https://github.com/Ploy-AI/ploy-tools/releases/download/v0.7.0/releases.json
+note: >-
+  Ploy publishes no product changelog page on ploy.ai or docs.ploy.ai
+  (https://ploy.ai/changelog and https://docs.ploy.ai/changelog both return 404,
+  probed 2026-08-12). The only dated, versioned change record Ploy publishes is
+  for the Ploy CLI, shipped as GitHub releases on its own org (Ploy-AI/ploy-tools)
+  plus a machine-readable releases.json manifest attached to each release. That
+  manifest is the source of the entries below.
+scheme: semver
+current_version: 0.7.0
+current_released: '2026-08-11'
+scope: Ploy CLI (ploy binary)
+entries:
+- version: 0.7.0
+  date: '2026-08-11'
+  breaking: false
+  highlights:
+  - 'Bring your own site: `ploy site init --from <path>` seeds a new site from a local Ploy Astro repository.'
+- version: 0.6.0
+  date: '2026-08-10'
+  breaking: false
+  highlights:
+  - Create workspaces with `ploy workspace create`.
+  - Manage organizations with `ploy organization list|create`.
+- version: 0.5.0
+  date: '2026-08-04'
+  breaking: false
+  highlights:
+  - Browse workspace databases with `ploy database list|tables|query`.
+  - Load data with `ploy database import`.
+- version: 0.4.0
+  date: '2026-07-28'
+  breaking: false
+  highlights:
+  - Workspace-scoped `PLOY_API_TOKEN` authentication for headless CI and remote workers.
+  - Pinned workspace scope, expiry reporting, and credential-management restrictions.
+- version: 0.3.1
+  date: '2026-07-23'
+  breaking: true
+  highlights:
+  - '`ploy site init --from` renamed to `--slurp` with no alias (breaking flag rename).'
+  - New sites return a direct workspace dashboard deep link.
+- version: 0.3.0
+  date: '2026-07-23'
+  breaking: false
+  highlights:
+  - Publish production sites and sync site code from the CLI.
+  - Honest `--dry-run` and clearer plan-denial handling.
+- version: 0.2.0
+  date: '2026-07-16'
+  breaking: true
+  highlights:
+  - CLI auth endpoints moved under /api/auth for shared WAF coverage.
+- version: 0.1.0
+  date: '2026-07-09'
+  breaking: false
+  highlights:
+  - Initial app-managed CLI release with login and logout.

@@ -1,0 +1,46 @@
+generated: '2026-08-12'
+method: probed
+probe: true
+url: https://trust.ploy.ai/
+status: 200
+checked: '2026-08-12'
+platform: Vanta
+platform_evidence: >-
+  The page is served by Vanta (assets.vanta.com signature manifest, data-slugid
+  24unibf0zzlnq8wqjcyz) and is titled "runploy.com Trust Center" — runploy.com is
+  Ploy's other corporate domain, also used for support@runploy.com.
+certifications:
+- name: SOC 2 Type II
+  status: claimed
+  evidence: >-
+    Listed as an Enterprise plan entitlement on https://ploy.ai/pricing (HTTP
+    200, read 2026-08-12) and linked from docs.ploy.ai/security as "For
+    compliance documentation, security reports, and real-time subprocessor and
+    status information, visit our Trust Center."
+  report_access: request through the trust center
+note: >-
+  The trust center body is rendered client-side, so the certification list could
+  not be read from the raw HTML — only the page's presence, platform and title
+  are recorded as probed. The SOC 2 Type II claim is cited from Ploy's own
+  pricing page rather than from the trust center DOM, so it is marked `claimed`
+  rather than verified. The trust center advertises subprocessor and real-time
+  status information as well.
+evidence:
+- source: https://trust.ploy.ai/
+  status: 200
+  kind: trust center (Vanta-hosted)
+- source: https://ploy.ai/pricing
+  status: 200
+  kind: published SOC 2 Type II claim
+- source: https://docs.ploy.ai/security
+  status: 200
+  kind: security & compliance page linking the trust center
+security_posture:
+  encryption_at_rest: AES-256
+  encryption_in_transit: HTTPS everywhere; ACME-provisioned certificates per custom domain
+  build_isolation: sandboxed per-build environments, no cross-workspace access
+  deploy_model: immutable snapshots with instant rollback
+  integration_auth: OAuth 2.0 with scoped permissions; no stored passwords
+  ai_training: workspace content is not used to train AI models
+  account_controls: passkeys and SSO controls documented at https://docs.ploy.ai/enhanced-security
+  source: https://docs.ploy.ai/security

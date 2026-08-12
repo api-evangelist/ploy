@@ -1,0 +1,87 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.ploy.ai/cli/authentication
+docs:
+- https://docs.ploy.ai/cli/authentication
+- https://docs.ploy.ai/cli/remote-development
+- https://docs.ploy.ai/webhooks
+- https://docs.ploy.ai/enhanced-security
+note: >-
+  Ploy publishes no OpenAPI, so this profile is read from the documentation
+  rather than derived from securitySchemes. Two distinct credentials exist and
+  they are not interchangeable: a workspace-scoped API token used by the Ploy CLI
+  (and anything driving it), and a per-endpoint webhook ingest key. Both are sent
+  as HTTP bearer tokens.
+summary:
+  types: [http]
+  schemes: [bearer]
+  api_key_in: [header]
+  oauth2_flows: []
+  oauth2_note: >-
+    OAuth 2.0 appears only OUTBOUND — Ploy connects to third-party services
+    (Google, GitHub, HubSpot, Notion, Slack, Figma, ad platforms) over OAuth with
+    scoped permissions. Ploy does not publish an OAuth authorization server of
+    its own; /.well-known/oauth-authorization-server and
+    /.well-known/openid-configuration return 404 on ploy.ai (probed 2026-08-12).
+schemes:
+- name: PloyApiToken
+  type: http
+  scheme: bearer
+  in: env
+  parameter: PLOY_API_TOKEN
+  token_prefix: sk_ploy_pat_
+  scope: workspace
+  description: >-
+    Workspace-scoped personal access token created in workspace Settings →
+    Developer → API tokens. Read by the CLI on every invocation and never written
+    to disk. Each token is pinned to exactly one workspace; the pin is enforced
+    by the API, not by the client, and a mismatched --workspace/PLOY_WORKSPACE_ID
+    exits 1 with "This API token is scoped to a different workspace".
+  expiry:
+    options_days: [30, 90, 365]
+    default_days: 90
+    refresh: false
+    check: ploy whoami reports the pinned workspace and remaining days
+  issuance: >-
+    The raw token is shown once, with a copyable `export PLOY_API_TOKEN=…` line.
+    It cannot be retrieved later. Any workspace member can create and view their
+    own tokens; owners and admins can view and revoke every token in the
+    workspace.
+  restrictions: >-
+    ploy logout, ploy tokens and ploy token revoke are unavailable while
+    PLOY_API_TOKEN is set (exit code 2). API tokens cannot mint replacement
+    credentials or revoke the browser session that created them.
+  failure_modes:
+  - exit 3 — "PLOY_API_TOKEN is invalid or expired"
+  - exit 3 — "PLOY_API_TOKEN is not workspace-scoped"
+  rate_limit: 60 requests per minute per token
+  source: https://docs.ploy.ai/cli/authentication
+- name: PloyWebhookEndpointKey
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  scope: single webhook endpoint
+  description: >-
+    API key minted per webhook ingest endpoint in workspace Settings → Webhooks
+    and shown once. Sent as `Authorization: Bearer {apiKey}` on every POST to
+    https://ploy.ai/api/v1/webhook/{endpointSlug}. Requests without a valid key
+    are rejected with 401. Disabling or rotating an endpoint invalidates its key
+    immediately; there is no rotate-in-place — the documented rotation is create
+    a new endpoint, update the sender, disable the old one.
+  source: https://docs.ploy.ai/webhooks
+- name: PloyCliBrowserLogin
+  type: http
+  scheme: bearer
+  in: config
+  parameter: ~/.config/ploy/config.json
+  description: >-
+    Interactive `ploy login` stores a server-side-revocable CLI refresh
+    credential in ~/.config/ploy/config.json (mode 0600). `ploy tokens` lists up
+    to 100 active CLI credentials; `ploy token revoke <id|name|current>` revokes
+    one. Superseded by PLOY_API_TOKEN when that variable is set.
+  source: https://docs.ploy.ai/cli/authentication
+account_security:
+  passkeys: true
+  sso_saml: announced (listed as "Coming soon" on the Enterprise plan)
+  source: https://docs.ploy.ai/enhanced-security
