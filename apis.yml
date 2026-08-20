@@ -51,6 +51,19 @@ tags:
 - Website Builder
 - Growth
 - Advertising
+- Webhook
+- CLI
+- Agent Skills
+tags_raw:
+- Company
+- Marketing
+- Marketing Automation
+- Artificial Intelligence
+- AI Agents
+- SEO
+- Website Builder
+- Growth
+- Advertising
 - Webhooks
 - CLI
 - Agent Skills
@@ -70,6 +83,11 @@ apis:
   humanURL: https://docs.ploy.ai/webhooks
   baseURL: https://ploy.ai/api/v1
   tags:
+  - Webhook
+  - Event
+  - Marketing Automation
+  - AI Agents
+  tags_raw:
   - Webhooks
   - Events
   - Marketing Automation
