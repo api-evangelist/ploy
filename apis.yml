@@ -42,6 +42,9 @@ accessModel:
   method: searched
 image: https://cdn.ploy.ai/d21bf4ad-2458-43ee-9561-54c28ab0e85f/user/095160ed-og-home-alt.jpg
 url: https://raw.githubusercontent.com/api-evangelist/ploy/refs/heads/main/apis.yml
+x-api-posture: no-product-api
+x-api-posture-basis: observed
+x-api-posture-note: "Its programmable surface is deliberately CLI-first rather than REST-first: Ploy publishes no OpenAPI and no public API reference, but it does ship a standalone `ploy` CLI binary (workspaces, sites, pu"
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
