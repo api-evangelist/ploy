@@ -3,74 +3,10 @@ method: searched
 source: live probe of https://ploy.ai/.well-known/* and https://docs.ploy.ai/.well-known/*
 checked: '2026-08-12'
 host: https://ploy.ai
-note: >-
-  security.txt is a real served document (RFC 9116) — it is the only /.well-known
-  path Ploy answers. Every other path on both hosts returns a genuine HTTP 404
-  (Next.js/docs 404 page), not a soft-200 SPA shell. No agent card and no OAuth
-  or OIDC discovery document is published; Ploy is an OAuth client to third
-  parties, not an authorization server.
-documents:
-- path: /.well-known/security.txt
-  status: 200
-  file: ploy-security.txt
-  host: ploy.ai
-- path: /.well-known/openid-configuration
-  status: 404
-  host: ploy.ai
-- path: /.well-known/oauth-authorization-server
-  status: 404
-  host: ploy.ai
-- path: /.well-known/oauth-protected-resource
-  status: 404
-  host: ploy.ai
-- path: /.well-known/api-catalog
-  status: 404
-  host: ploy.ai
-- path: /.well-known/ai-plugin.json
-  status: 404
-  host: ploy.ai
-- path: /.well-known/agent-card.json
-  status: 404
-  host: ploy.ai
-- path: /.well-known/agent.json
-  status: 404
-  host: ploy.ai
-- path: /.well-known/mcp.json
-  status: 404
-  host: ploy.ai
-- path: /.well-known/security.txt
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/openid-configuration
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/oauth-authorization-server
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/oauth-protected-resource
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/api-catalog
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/ai-plugin.json
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/agent-card.json
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/agent.json
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/mcp.json
-  status: 404
-  host: docs.ploy.ai
-- path: /.well-known/security.txt
-  status: 404
-  host: ingest.ploy.ai
-- path: /.well-known/agent-card.json
-  status: 404
-  host: ingest.ploy.ai
+note: security.txt is a real served document (RFC 9116) — it is the only /.well-known path Ploy answers.
+  Every other path on both hosts returns a genuine HTTP 404 (Next.js/docs 404 page), not a soft-200 SPA
+  shell. No agent card and no OAuth or OIDC discovery document is published; Ploy is an OAuth client to
+  third parties, not an authorization server.
 other_agent_surfaces:
 - path: /llms.txt
   host: ploy.ai
@@ -86,3 +22,52 @@ other_agent_surfaces:
 - path: /robots.txt
   host: ploy.ai
   status: 200
+hosts:
+- host: https://ploy.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: ploy-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
