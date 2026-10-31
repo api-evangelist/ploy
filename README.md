@@ -64,23 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ploy is an AI-powered web marketing automation platform — AI agents that build, optimize and publish
-Astro/Tailwind marketing sites, run SEO and answer-engine optimization, identify visiting companies,
-and execute reusable multi-step workflows called Ploybooks.
+Ploy is an AI-powered web marketing automation platform that turns a company's marketing website into a growth channel. Founded in 2025 by former Webflow CTO Bryant Chou, backed by Y Combinator and First Round Capital ($27M), Ploy runs AI agents that build and optimize Astro/Tailwind marketing sites, write copy, run technical SEO and answer-engine optimization, identify visiting companies without cookies, launch ad campaigns, and execute reusable multi-step workflows called Ploybooks. Its programmable surface is deliberately CLI-first rather than REST-first: Ploy publishes no OpenAPI and no public API reference, but it does ship a standalone `ploy` CLI binary (workspaces, sites, publishing, variables and secrets, documents, Ploybooks, databases, Code Sync, and design-system inspection) authenticated by workspace-scoped API tokens for headless CI and remote coding agents, an installable Agent Skills catalog (`ploy skills init`), and one public HTTP endpoint — an authenticated inbound webhook ingest at /api/v1/webhook/{endpointSlug} that stores arbitrary JSON and triggers a Ploybook.
 
-Ploy's programmable surface is **CLI-first, not REST-first**. As of the 2026-08-12 enrichment pass it
-publishes:
+**Areas:** Company · Marketing · Marketing Automation · Artificial Intelligence · AI Agents · SEO · Website Builder · Growth · Advertising · Webhook · CLI · Agent Skills
 
-- a standalone **`ploy` CLI** (v0.7.0, released 2026-08-11) covering workspaces, organizations, sites,
-  publishing, variables/secrets, documents, Ploybooks, databases, Code Sync and design-system
-  inspection — authenticated by workspace-scoped `PLOY_API_TOKEN` for headless CI and remote agents;
-- one public HTTP endpoint — an authenticated **inbound webhook ingest** at
-  `POST https://ploy.ai/api/v1/webhook/{endpointSlug}` that stores arbitrary JSON and triggers a
-  Ploybook;
-- an installable **Agent Skills catalog** (`ploy skills init`) written into a checked-out Ploy site;
-- `llms.txt` on both `ploy.ai` and `docs.ploy.ai`, and a served `/.well-known/security.txt`.
+## Ploy on APIs.io
 
-It publishes **no OpenAPI, no REST API reference, no client SDKs, no MCP server, no A2A agent card and
-no deprecation policy** — each probed and recorded as an honest absence in this repo.
+Everything profiled for Ploy is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ploy/](https://apis.io/providers/ploy/)** — or go straight to one of the APIs or properties below.
 
-Backed by: y-combinator, first-round-capital
+### APIs (1)
+
+- [Ploy Webhook Ingest API](https://apis.io/apis/ploy/webhook-ingest/) — The only public HTTP endpoint Ploy documents. An authenticated inbound ingest endpoint that accepts any well-formed JSON object (up to 1 MB) from an…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Ploy Webhooks](https://apis.io/asyncapis/ploy/ploy-webhooks/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ploy Authentication](https://apis.io/security/ploy/ploy-authentication/)
+- [Ploy Domain Security](https://apis.io/security/ploy/ploy-domain-security/)
+- [Ploy Trust Center](https://apis.io/security/ploy/ploy-trust-center/)
+- [Ploy Vulnerability Disclosure](https://apis.io/security/ploy/ploy-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ploy Plans Pricing](https://apis.io/plans/ploy/ploy-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ploy Rate Limits](https://apis.io/rate-limits/ploy/ploy-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ploy.ai)
+- [Documentation](https://docs.ploy.ai)
+- [Getting started](https://docs.ploy.ai/quick-start)
+- [API reference](https://docs.ploy.ai/cli/reference)
+- [Pricing](https://ploy.ai/pricing)
+- [Sign up](https://ploy.ai)
+- [Support](https://docs.ploy.ai/faq)
+- [Blog](https://ploy.ai/blog)
+- [Compliance](https://trust.ploy.ai)
+- [Terms of service](https://ploy.ai/terms-of-service)
+- [Privacy policy](https://ploy.ai/privacy)
+- [GitHub](https://github.com/Ploy-AI)
+- [Status](https://status.ploy.ai)
+
+## API Evangelist rating
+
+**Kin Score 60.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 73.7 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 84.2 |
+
+**Agent readiness 26.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 28.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ploy/](https://apis.io/providers/ploy/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ploy: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ploy/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
